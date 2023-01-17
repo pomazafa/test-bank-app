@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   Param,
   Patch,
   Post,
@@ -35,6 +36,22 @@ export default class AccountController {
     @Req() request: RequestWithUser,
   ): Promise<AccountEntity> {
     return await this.accountService.create(accountDto, request.user);
+  }
+
+  @Get(ID_PARAMETER)
+  @ApiParam({ name: ID_PARAMETER_NAME, type: String })
+  public async getById(
+    @Param(ID_PARAMETER_NAME) id: UUID,
+    @Req() request: RequestWithUser,
+  ): Promise<AccountEntity> {
+    return await this.accountService.getById(id, request.user);
+  }
+
+  @Get()
+  public async getManyByClient(
+    @Req() request: RequestWithUser,
+  ): Promise<AccountEntity[]> {
+    return await this.accountService.getManyByClient(request.user);
   }
 
   @Patch(ID_PARAMETER)

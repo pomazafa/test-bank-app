@@ -5,8 +5,12 @@ export const AccountRepositoryInterfaceToken = Symbol(
   'AccountRepositoryInterface',
 );
 
-export type SearchOptions = {
+export type SearchOneOptions = {
   id: UUID;
+  clientId: UUID;
+};
+
+export type SearchManyOptions = {
   clientId: UUID;
 };
 
@@ -22,5 +26,6 @@ export interface AccountRepositoryInterface
     options: UpdateOptions,
   ): Promise<AccountEntity>;
 
-  findOneByOptions(options: SearchOptions): Promise<AccountEntity>;
+  findOneByOptions(options: SearchOneOptions): Promise<AccountEntity>;
+  findManyByOptions(options: SearchManyOptions): Promise<AccountEntity[]>;
 }

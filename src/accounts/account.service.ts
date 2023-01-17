@@ -38,4 +38,21 @@ export class AccountService {
     }
     return account;
   }
+
+  public async getById(id: UUID, client: Client): Promise<AccountEntity> {
+    const account = await this.accountRepository.findOneByOptions({
+      id,
+      clientId: client.id,
+    });
+    if (!account) {
+      throw new NotFoundException(`Account with id ${id} not found`);
+    }
+    return account;
+  }
+
+  public getManyByClient(client: Client): Promise<AccountEntity[]> {
+    return this.accountRepository.findManyByOptions({
+      clientId: client.id,
+    });
+  }
 }

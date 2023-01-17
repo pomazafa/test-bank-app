@@ -6,7 +6,8 @@ import { BaseAbstractRepository, UUID } from '../../common';
 import { AccountEntity } from '..';
 import {
   AccountRepositoryInterface,
-  SearchOptions,
+  SearchManyOptions,
+  SearchOneOptions,
   UpdateOptions,
 } from './accountRepository.interface';
 
@@ -21,6 +22,13 @@ export class AccountRepository
   ) {
     super(accountsRepository);
   }
+  findManyByOptions(options: SearchManyOptions): Promise<AccountEntity[]> {
+    return this.accountsRepository
+      .createQueryBuilder('accounts')
+      .leftJoinAndSelect('accounts.ownerId', 'clients')
+      .where('clients.id = :clientId', { clientId: options.clientId })
+      .getMany();
+  }
 
   async updateById(
     id: UUID,
@@ -34,7 +42,7 @@ export class AccountRepository
     return this.accountsRepository.save({ ...account, ...options });
   }
 
-  findOneByOptions(options: SearchOptions): Promise<AccountEntity> {
+  findOneByOptions(options: SearchOneOptions): Promise<AccountEntity> {
     return this.accountsRepository
       .createQueryBuilder('accounts')
       .leftJoinAndSelect('accounts.ownerId', 'clients')
