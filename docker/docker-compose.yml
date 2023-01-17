@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:6.2-alpine
+    container_name: bank-test-app-redis
+    restart: always
+    ports:
+      - 6379:6379
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    networks:
+      - bank_test
+
+  postgres:
+    image: postgres:14
+    container_name: bank-test-app-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: bank
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD:
+    volumes:
+      - postgresql-data:/var/lib/postgresql/data
+      - ./postgres:/docker-entrypoint-initdb.d
+    ports:
+      - 5432:5432
+    networks:
+      - bank_test
+
+volumes:
+  postgresql-data:
+
+networks:
+  bank_test:
+    name: bank-network
+    driver: bridge
