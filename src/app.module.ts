@@ -3,12 +3,19 @@ import { Module } from '@nestjs/common';
 import { AccountsModule } from './accounts/accounts.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuthModule } from './auth/auth.module';
 import { ClientsModule } from './clients/clients.module';
-import { TypeormModule } from './common';
+import { TypeormModule } from './common/modules';
 import { TransactionsModule } from './transactions/transactions.module';
 
 @Module({
-  imports: [TypeormModule, ClientsModule, AccountsModule, TransactionsModule],
+  imports: [
+    TypeormModule,
+    ClientsModule,
+    AuthModule,
+    AccountsModule,
+    TransactionsModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

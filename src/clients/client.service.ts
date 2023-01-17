@@ -18,4 +18,8 @@ export class ClientService {
     const client = new ClientEntity(clientDto);
     return this.clientRepository.create(client);
   }
+
+  public async findClientByName(name: string): Promise<ClientEntity> {
+    return this.clientRepository.findOneByOptions({ name });
+  }
 }

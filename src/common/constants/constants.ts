@@ -1,6 +1,8 @@
 export const TIMESTAMP = 'timestamp';
 export const CURRENT_TIMESTAMP = 'CURRENT_TIMESTAMP';
 export const UUID_GENERATED_COLUMN = 'uuid';
+
+export const WHITELIST_DOMAINS = 'WHITELIST_DOMAINS';
 export const DEFAULT_DAILY_WITHDRAWAL_LIMIT = 100;
 export const DAILY_ACCOUNT_READING_LIMIT = 10;
 

@@ -1,13 +1,15 @@
+import { Exclude } from 'class-transformer';
 import { Min } from 'class-validator';
 import {
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-import { ClientEntity } from '../../clients';
+import { ClientEntity } from '../../clients/entities';
 import {
   Account,
   CURRENT_TIMESTAMP,
@@ -16,7 +18,11 @@ import {
   UUID,
   UUID_GENERATED_COLUMN,
 } from '../../common';
-import { TransactionEntity } from '../../transactions';
+import { TransactionEntity } from '../../transactions/entities';
+
+export const DAILY_WITHDRAWAL_LIMIT_PROPERTY = 'daily_withdrawal_limit';
+export const ACCOUNT_TYPE_PROPERTY = 'account_type';
+export const OWNER_ID_PROPERTY = 'owner_id';
 
 @Entity()
 export class AccountEntity implements Account {
@@ -31,24 +37,27 @@ export class AccountEntity implements Account {
   active: boolean;
 
   @Min(0)
-  @Column({ default: DEFAULT_DAILY_WITHDRAWAL_LIMIT })
+  @Column({
+    name: DAILY_WITHDRAWAL_LIMIT_PROPERTY,
+    default: DEFAULT_DAILY_WITHDRAWAL_LIMIT,
+  })
   dailyWithdrawalLimit: number;
 
-  @Column()
+  @Column({ name: ACCOUNT_TYPE_PROPERTY })
   accountType: number;
 
   @Column({ type: TIMESTAMP, default: () => CURRENT_TIMESTAMP })
   createDate: Date;
 
-  @ManyToOne(() => ClientEntity, (owner) => owner.accounts)
-  owner: ClientEntity;
+  @ManyToOne(() => ClientEntity)
+  @JoinColumn({ name: OWNER_ID_PROPERTY })
+  @Exclude()
+  ownerId: UUID;
 
-  @OneToMany(() => TransactionEntity, (transaction) => transaction.account)
+  @OneToMany(() => TransactionEntity, (transaction) => transaction.accountId)
   transactions: TransactionEntity[];
 
   constructor(account: Partial<AccountEntity>) {
-    this.balance = account.balance;
-    this.accountType = account.accountType;
-    this.dailyWithdrawalLimit = account.dailyWithdrawalLimit;
+    Object.assign(this, account);
   }
 }

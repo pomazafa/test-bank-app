@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AccountEntity } from 'src/accounts';
 
 import { ClientController } from './client.controller';
 import { ClientService } from './client.service';
@@ -11,7 +10,7 @@ import {
 } from './repositories';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ClientEntity, AccountEntity])],
+  imports: [TypeOrmModule.forFeature([ClientEntity])],
   providers: [
     {
       provide: ClientRepositoryInterfaceToken,
@@ -20,5 +19,6 @@ import {
     ClientService,
   ],
   controllers: [ClientController],
+  exports: [ClientService],
 })
 export class ClientsModule {}
