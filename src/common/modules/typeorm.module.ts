@@ -26,7 +26,6 @@ import {
         database: configService.get(DB_NAME),
         entities: ['dist/**/*.entity{.ts,.js}'],
         synchronize: !!configService.get(DB_SYNCHRONIZE),
-        // synchronize: true,
       }),
       inject: [ConfigService],
     }),
