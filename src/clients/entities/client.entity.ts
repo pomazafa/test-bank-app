@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   Column,
   Entity,
@@ -16,15 +17,19 @@ const NAME_PROPERTY = 'name';
 @Unique([NAME_PROPERTY])
 export class ClientEntity implements Client {
   @PrimaryGeneratedColumn(UUID_GENERATED_COLUMN)
+  @ApiProperty()
   id: UUID;
 
   @Column()
+  @ApiProperty()
   name: string;
 
   @Column()
+  @ApiProperty()
   document: string;
 
   @Column({ name: BIRTH_DATE_PROPERTY })
+  @ApiProperty({ name: BIRTH_DATE_PROPERTY })
   birthDate: Date;
 
   @OneToMany(() => AccountEntity, (account) => account.ownerId)
