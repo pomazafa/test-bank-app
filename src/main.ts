@@ -8,6 +8,17 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
+  const whitelist = JSON.parse(process.env.WHITELIST_DOMAINS);
+  app.enableCors({
+    origin: function (origin, callback) {
+      if (!origin || whitelist.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+  });
+
   const config = new DocumentBuilder()
     .setTitle('Bank')
     .setDescription('The bank API description')
