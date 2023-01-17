@@ -6,6 +6,9 @@ export const WHITELIST_DOMAINS = 'WHITELIST_DOMAINS';
 export const DEFAULT_DAILY_WITHDRAWAL_LIMIT = 100;
 export const DAILY_ACCOUNT_READING_LIMIT = 10;
 
+export const ID_PARAMETER = ':id';
+export const ID_PARAMETER_NAME = 'id';
+
 // API
 export const CLIENTS_PREFIX = 'clients';
 export const TRANSACTIONS_PREFIX = 'transactions';

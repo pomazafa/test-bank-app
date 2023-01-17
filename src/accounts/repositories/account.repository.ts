@@ -6,6 +6,7 @@ import { BaseAbstractRepository, UUID } from '../../common';
 import { AccountEntity } from '..';
 import {
   AccountRepositoryInterface,
+  SearchOptions,
   UpdateOptions,
 } from './accountRepository.interface';
 
@@ -21,8 +22,24 @@ export class AccountRepository
     super(accountsRepository);
   }
 
-  async updateById(id: UUID, options: UpdateOptions): Promise<AccountEntity> {
-    await this.accountsRepository.update(id, options);
-    return this.findOneById(id);
+  async updateById(
+    id: UUID,
+    clientId: UUID,
+    options: UpdateOptions,
+  ): Promise<AccountEntity> {
+    const account = await this.findOneByOptions({ id, clientId });
+    if (!account) {
+      return;
+    }
+    return this.accountsRepository.save({ ...account, ...options });
+  }
+
+  findOneByOptions(options: SearchOptions): Promise<AccountEntity> {
+    return this.accountsRepository
+      .createQueryBuilder('accounts')
+      .leftJoinAndSelect('accounts.ownerId', 'clients')
+      .where('accounts.id = :id', { id: options.id })
+      .andWhere('clients.id = :clientId', { clientId: options.clientId })
+      .getOne();
   }
 }

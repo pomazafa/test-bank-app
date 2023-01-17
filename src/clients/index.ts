@@ -1,2 +1,2 @@
-export * from './clients.module';
+export * from './client.service';
 export * from './entities';

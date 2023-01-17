@@ -1,6 +1,7 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 
-import { CreateAccountDto } from './dto';
+import { Client, UUID } from '../common';
+import { ChangeAccountStatusDto, CreateAccountDto } from './dto';
 import { AccountEntity } from './entities';
 import {
   AccountRepositoryInterface,
@@ -14,8 +15,27 @@ export class AccountService {
     private readonly accountRepository: AccountRepositoryInterface,
   ) {}
 
-  public async create(accountDto: CreateAccountDto): Promise<AccountEntity> {
-    const account = new AccountEntity(accountDto);
+  public async create(
+    accountDto: CreateAccountDto,
+    client: Client,
+  ): Promise<AccountEntity> {
+    const account = new AccountEntity({ ...accountDto, ownerId: client.id });
     return this.accountRepository.create(account);
+  }
+
+  public async changeStatus(
+    id: UUID,
+    changeStatusDto: ChangeAccountStatusDto,
+    client: Client,
+  ): Promise<AccountEntity> {
+    const account = await this.accountRepository.updateById(
+      id,
+      client.id,
+      changeStatusDto,
+    );
+    if (!account) {
+      throw new NotFoundException(`Account with id ${id} not found`);
+    }
+    return account;
   }
 }
