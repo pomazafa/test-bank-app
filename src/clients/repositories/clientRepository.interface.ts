@@ -1,6 +1,10 @@
 import { BaseInterfaceRepository } from '../../common';
 import { ClientEntity } from '..';
 
+export const ClientRepositoryInterfaceToken = Symbol(
+  'ClientRepositoryInterface',
+);
+
 export type SearchOptions = {
   name: string;
 };

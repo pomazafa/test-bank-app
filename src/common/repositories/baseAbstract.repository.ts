@@ -12,8 +12,8 @@ export abstract class BaseAbstractRepository<T extends Entity>
     this.entityRepository = repository;
   }
 
-  public async create(data: T): Promise<T> {
-    return await this.entityRepository.save(data);
+  public create(data: T): Promise<T> {
+    return this.entityRepository.save(data);
   }
 
   public async findOneById(id: UUID): Promise<T> {
@@ -21,14 +21,12 @@ export abstract class BaseAbstractRepository<T extends Entity>
     return await this.entityRepository.findOne(options);
   }
 
-  public async findByCondition(
-    filterCondition: FindOptionsWhere<T>,
-  ): Promise<T> {
-    return await this.entityRepository.findOne({ where: filterCondition });
+  public findByCondition(filterCondition: FindOptionsWhere<T>): Promise<T> {
+    return this.entityRepository.findOne({ where: filterCondition });
   }
 
-  public async findAll(): Promise<T[]> {
-    return await this.entityRepository.find();
+  public findAll(): Promise<T[]> {
+    return this.entityRepository.find();
   }
 
   public async remove(id: UUID): Promise<boolean> {
