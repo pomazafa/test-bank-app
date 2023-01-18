@@ -8,6 +8,7 @@ import {
   Patch,
   Post,
   Req,
+  UseFilters,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -23,6 +24,7 @@ import { JwtGuard } from '../auth';
 import {
   ACCOUNTS_PREFIX,
   ACCOUNTS_TAG,
+  HttpExceptionFilter,
   ID_PARAMETER,
   ID_PARAMETER_NAME,
   RequestWithUser,
@@ -40,6 +42,7 @@ import {
 @ApiBearerAuth()
 @Controller(ACCOUNTS_PREFIX)
 @UseGuards(JwtGuard)
+@UseFilters(new HttpExceptionFilter())
 export default class AccountController {
   constructor(private readonly accountService: AccountService) {}
 

@@ -1,13 +1,26 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Post,
+  UseFilters,
+} from '@nestjs/common';
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 
-import { Client, CLIENTS_PREFIX, CLIENTS_TAG } from '../common';
+import {
+  Client,
+  CLIENTS_PREFIX,
+  CLIENTS_TAG,
+  HttpExceptionFilter,
+} from '../common';
 import { ClientService } from './client.service';
 import { CreateClientDto } from './dto';
 import { ClientEntity } from './entities';
 
 @ApiTags(CLIENTS_TAG)
 @Controller(CLIENTS_PREFIX)
+@UseFilters(new HttpExceptionFilter())
 export class ClientController {
   constructor(private readonly clientService: ClientService) {}
 

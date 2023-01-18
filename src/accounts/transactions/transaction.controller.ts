@@ -7,6 +7,7 @@ import {
   Param,
   Post,
   Req,
+  UseFilters,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -19,6 +20,7 @@ import {
 import { JwtGuard } from '../../auth';
 import {
   ACCOUNTS_PREFIX,
+  HttpExceptionFilter,
   ID_PARAMETER,
   ID_PARAMETER_NAME,
   RequestWithUser,
@@ -33,6 +35,7 @@ import { TransactionService } from './transaction.service';
 @ApiBearerAuth()
 @Controller(`${ACCOUNTS_PREFIX}/${ID_PARAMETER}/${TRANSACTIONS_PREFIX}`)
 @UseGuards(JwtGuard)
+@UseFilters(new HttpExceptionFilter())
 export default class TransactionController {
   constructor(private readonly transactionService: TransactionService) {}
 

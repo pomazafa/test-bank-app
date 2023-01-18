@@ -1,13 +1,26 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Post,
+  UseFilters,
+} from '@nestjs/common';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
-import { AUTH_LOGIN, AUTH_PREFIX, AUTH_TAG } from '../common';
+import {
+  AUTH_LOGIN,
+  AUTH_PREFIX,
+  AUTH_TAG,
+  HttpExceptionFilter,
+} from '../common';
 import { AuthService } from './auth.service';
 import { AccessTokenDto } from './dto/accessToken.dto';
 import { LoginDto } from './dto/login.dto';
 
 @ApiTags(AUTH_TAG)
 @Controller(AUTH_PREFIX)
+@UseFilters(new HttpExceptionFilter())
 export class AuthController {
   constructor(private authService: AuthService) {}
 
