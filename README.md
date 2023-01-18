@@ -16,22 +16,14 @@ Implement REST API for banking transactions.
 
 ## Installation
 
-Run with default settings:
-
 ```
-git clone https://github.com/pomazafa/test-bank-app.git
+$ git clone https://github.com/pomazafa/test-bank-app.git
 
-cd test-bank-app
+$ cd test-bank-app
 
-cp .env.dev .env
+$ cp .env.dev .env
 
-npm install
-```
-
-## Running the app
-
-```bash
-npm run start:dev
+$ npm install
 ```
 
 ## Running the app
