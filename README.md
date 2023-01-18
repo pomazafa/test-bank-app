@@ -1,44 +1,92 @@
-## Description
+## Технологии
 
-It is necessary to implement modules for the user management system.
-Implement REST API for banking transactions.
+- Postgres
+- Node.js
+- NestJS
+- Swagger
+- Git
+- NPM
+- TypeScript
+- Redis
 
-## Requirements
+## Описание проекта
 
-1. Account creation
-2. Account replenishment
-3. Getting the current balance
-4. Withdrawal
-5. Account blocking
-6. Transaction history
-7. Limitation on the number of requests for a current account per day (without additional tables)
-8. Checking where the requests come from and denying if the request is from an unknown source
+Необходимо реализовать модули для системы управления пользователями.
+Реализовать REST API для операций по осуществлению банковский транзацкий.
 
-## Installation
+## Требования к проекту
 
-```
-$ git clone https://github.com/pomazafa/test-bank-app.git
+1. Создание аккаунта
+2. Пополнение счета
+3. Получение текущего баланса
+4. Снятие со счета
+5. Блокировка аккаунта
+6. История транзакций
+7. Ограничение по количеству запросов на получение текущего счета в день(без дополнительных таблиц)
+8. Проверка, откуда приходят запросы и запрет, если запрос из неизвестного источника
 
-$ cd test-bank-app
+## Системные требования
 
-$ cp .env.dev .env
+### Node.js
 
-$ npm install
-```
+- Linux: https://nodejs.org/en/download/package-manager/
+- Windows: https://nodejs.org/en/download/
 
-## Running the app
+### Docker
 
-```bash
+https://docs.docker.com/engine/install/
 
-$ cd docker
+### Docker Compose
 
-$ docker-compose --env-file .env.dev up -d
+https://docs.docker.com/compose/install/
 
-$ cd ..
+### Git
 
-$ npm run start:dev
-```
+https://github.com/git-guides/install-git
+
+## Установка
+
+1. `git clone ssh://git@gitlab.intexsoft.by:222/intexsoft/intexsoft-food/intexsoft-food-server.git`
+1. `cd test-bank-app`
+1. `cp .env.dev .env`
+1. `npm install`
+
+## Запуск приложения
+
+Выполните последовательно следующие команды:
+
+1. `cd docker`
+1. `docker-compose --env-file .env.dev up -d`
+1. `cd ..`
+1. `npm run start:dev`
+
+Приложение теперь запущено на <a href="http://localhost:3000">http://localhost:3000</a>
 
 ## Swagger
 
-You can see Swagger documentation by following the <a href="http://localhost:3000/swagger">link</a> while app is running
+Вы можете посмотреть Swagger документацию к проекту по <a href="http://localhost:3000/swagger">ссылке</a>, если приложение запущено
+
+## Переменные окружения
+
+- DB_HOST - хост базы данных
+- DB_PORT - порт базы данных
+- DB_USERNAME - имя пользователя базы данных
+- DB_PASSWORD - пароль пользователя базы данных
+- DB_NAME - имя базы данных
+- DB_SYNCHRONIZE - включена ли синхронизация базы данных
+- JWT_SECRET_KEY - секретный ключ для JWT токена
+- JWT_TOKEN_TTL - время жизни JWT токена
+- WHITELIST_DOMAINS - список доменов, откуда разрешены запросы к API
+- DAILY_ACCOUNT_READING_LIMIT - лимит на чтение баланса в день
+
+Значения по умолчанию:
+DB_HOST=localhost
+DB_PORT=5432
+DB_USERNAME=postgres
+DB_PASSWORD=postgres
+DB_NAME=bank
+DB_SYNCHRONIZE=true
+JWT_SECRET_KEY=fs3nbk23jas0l
+JWT_TOKEN_TTL=3600000
+WHITELIST_DOMAINS=["http://localhost:3000","allowed-domain.com"]
+DAILY_ACCOUNT_READING_LIMIT=5

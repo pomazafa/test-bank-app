@@ -5,6 +5,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { Cache } from 'cache-manager';
 
 import { Client, DAILY_ACCOUNT_READING_LIMIT, UUID } from '../common';
@@ -21,6 +22,7 @@ export class AccountService {
     @Inject(AccountRepositoryInterfaceToken)
     private readonly accountRepository: AccountRepositoryInterface,
     @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
+    private configService: ConfigService,
   ) {}
 
   public async create(
@@ -48,11 +50,9 @@ export class AccountService {
   }
 
   public async getById(id: UUID, client: Client): Promise<AccountEntity> {
+    const limit = this.configService.get(DAILY_ACCOUNT_READING_LIMIT);
     const accountBalanceReadingCount = await this.cacheManager.get<number>(id);
-    if (
-      accountBalanceReadingCount &&
-      accountBalanceReadingCount >= DAILY_ACCOUNT_READING_LIMIT
-    ) {
+    if (accountBalanceReadingCount && accountBalanceReadingCount >= limit) {
       throw new ForbiddenException('Daily account reading limit reached');
     }
 

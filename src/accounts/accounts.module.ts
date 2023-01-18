@@ -1,4 +1,5 @@
 import { CacheModule, Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import AccountController from './account.controller';
@@ -15,6 +16,7 @@ import { TransactionsModule } from './transactions';
     TypeOrmModule.forFeature([AccountEntity]),
     CacheModule.register(),
     TransactionsModule,
+    ConfigModule,
   ],
   providers: [
     {
