@@ -16,6 +16,7 @@ import {
   ApiCreatedResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
+  ApiOperation,
   ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
@@ -49,6 +50,9 @@ export default class AccountController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
+  @ApiOperation({
+    summary: 'Creates a new account for the user',
+  })
   @ApiCreatedResponse({
     description: 'The account has been successfully created.',
     type: AccountResponseDto,
@@ -62,6 +66,9 @@ export default class AccountController {
   }
 
   @Get(`${ID_PARAMETER}/${BALANCE_PREFIX}`)
+  @ApiOperation({
+    summary: 'Gets the balance of the account',
+  })
   @ApiParam({ name: ID_PARAMETER_NAME, type: String })
   @ApiOkResponse({ type: BalanceResponseDto })
   public async getById(
@@ -73,6 +80,9 @@ export default class AccountController {
   }
 
   @Get()
+  @ApiOperation({
+    summary: 'Gets all the accounts of the client',
+  })
   @ApiOkResponse({ isArray: true, type: AccountResponseDto })
   public async getManyByClient(@Req() request: RequestWithUser) {
     const result = await this.accountService.getManyByClient(request.user);
@@ -81,6 +91,9 @@ export default class AccountController {
 
   @Patch(ID_PARAMETER)
   @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Updates the status of the client',
+  })
   @ApiParam({ name: ID_PARAMETER_NAME, type: String })
   @ApiOkResponse({ type: AccountResponseDto })
   @ApiNotFoundResponse({ description: 'Not found' })

@@ -6,7 +6,7 @@ import {
   Post,
   UseFilters,
 } from '@nestjs/common';
-import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import {
   Client,
@@ -26,6 +26,9 @@ export class ClientController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
+  @ApiOperation({
+    summary: 'Creates a new client',
+  })
   @ApiCreatedResponse({
     status: HttpStatus.CREATED,
     description: 'The client has been successfully created.',

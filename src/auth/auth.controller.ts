@@ -6,7 +6,7 @@ import {
   Post,
   UseFilters,
 } from '@nestjs/common';
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import {
   AUTH_LOGIN,
@@ -25,6 +25,9 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post(AUTH_LOGIN)
+  @ApiOperation({
+    summary: 'Authenticates the user',
+  })
   @ApiOkResponse({
     type: AccessTokenDto,
     description: 'Access token for the user',

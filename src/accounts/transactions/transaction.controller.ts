@@ -14,6 +14,7 @@ import {
   ApiBearerAuth,
   ApiCreatedResponse,
   ApiOkResponse,
+  ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
 
@@ -41,6 +42,9 @@ export default class TransactionController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
+  @ApiOperation({
+    summary: 'Creates a transaction. If value below zero - decrease balance',
+  })
   @ApiCreatedResponse({
     description: 'The transaction has been successfully created.',
     type: TransactionResponseDto,
@@ -59,6 +63,9 @@ export default class TransactionController {
   }
 
   @Get()
+  @ApiOperation({
+    summary: 'Gets all the transactions of the account',
+  })
   @ApiOkResponse({
     description: 'Transactions related to the account',
     type: TransactionResponseDto,
