@@ -15,6 +15,7 @@ export const TRANSACTIONS_PREFIX = 'transactions';
 export const ACCOUNTS_PREFIX = 'accounts';
 export const AUTH_PREFIX = 'auth';
 export const AUTH_LOGIN = 'login';
+export const BALANCE_PREFIX = 'balance';
 
 // Swagger
 export const CLIENTS_TAG = 'Clients';

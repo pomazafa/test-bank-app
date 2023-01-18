@@ -24,6 +24,7 @@ import { JwtGuard } from '../auth';
 import {
   ACCOUNTS_PREFIX,
   ACCOUNTS_TAG,
+  BALANCE_PREFIX,
   HttpExceptionFilter,
   ID_PARAMETER,
   ID_PARAMETER_NAME,
@@ -60,7 +61,7 @@ export default class AccountController {
     return AccountResponseDto.fromEntity(result);
   }
 
-  @Get(ID_PARAMETER)
+  @Get(`${ID_PARAMETER}/${BALANCE_PREFIX}`)
   @ApiParam({ name: ID_PARAMETER_NAME, type: String })
   @ApiOkResponse({ type: BalanceResponseDto })
   public async getById(
