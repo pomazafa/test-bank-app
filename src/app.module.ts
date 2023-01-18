@@ -6,16 +6,9 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { ClientsModule } from './clients/clients.module';
 import { TypeormModule } from './common/modules';
-import { TransactionsModule } from './transactions/transactions.module';
 
 @Module({
-  imports: [
-    TypeormModule,
-    ClientsModule,
-    AuthModule,
-    AccountsModule,
-    TransactionsModule,
-  ],
+  imports: [TypeormModule, ClientsModule, AuthModule, AccountsModule],
   controllers: [AppController],
   providers: [AppService],
 })

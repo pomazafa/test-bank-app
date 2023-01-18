@@ -7,14 +7,14 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-import { AccountEntity } from '../../accounts/entities';
 import {
   CURRENT_TIMESTAMP,
   TIMESTAMP,
   Transaction,
   UUID,
   UUID_GENERATED_COLUMN,
-} from '../../common';
+} from '../../../common';
+import { AccountEntity } from '../../entities';
 
 export const TRANSACTION_DATE_PROPERTY = 'transaction_date';
 export const ACCOUNT_ID_PROPERTY = 'account_id';

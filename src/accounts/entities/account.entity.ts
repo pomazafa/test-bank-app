@@ -19,7 +19,7 @@ import {
   UUID,
   UUID_GENERATED_COLUMN,
 } from '../../common';
-import { TransactionEntity } from '../../transactions/entities';
+import { TransactionEntity } from '../transactions/entities';
 
 export const DAILY_WITHDRAWAL_LIMIT_PROPERTY = 'daily_withdrawal_limit';
 export const ACCOUNT_TYPE_PROPERTY = 'account_type';
