@@ -34,10 +34,9 @@ export class CreateAccountDto {
 
   @Expose({ name: ACCOUNT_TYPE_PROPERTY })
   @ApiProperty({
-    description: 'Daily withdrawal limit for the account',
-    example: 100,
-    required: false,
-    default: DEFAULT_DAILY_WITHDRAWAL_LIMIT,
+    description: 'Type of the the account',
+    example: 1,
+    required: true,
     minimum: 0,
     name: ACCOUNT_TYPE_PROPERTY,
   })

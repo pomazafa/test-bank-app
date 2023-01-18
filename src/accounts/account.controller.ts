@@ -30,7 +30,12 @@ import {
   UUID,
 } from '../common';
 import { AccountService } from './account.service';
-import { ChangeAccountStatusDto, CreateAccountDto } from './dto';
+import {
+  AccountResponseDto,
+  BalanceResponseDto,
+  ChangeAccountStatusDto,
+  CreateAccountDto,
+} from './dto';
 import { AccountEntity } from './entities';
 
 @ApiTags(ACCOUNTS_TAG)
@@ -44,47 +49,49 @@ export default class AccountController {
   @HttpCode(HttpStatus.CREATED)
   @ApiCreatedResponse({
     description: 'The account has been successfully created.',
-    type: AccountEntity,
+    type: AccountResponseDto,
   })
   public async create(
     @Body() accountDto: CreateAccountDto,
     @Req() request: RequestWithUser,
-  ): Promise<Account> {
-    return await this.accountService.create(accountDto, request.user);
+  ) {
+    const result = await this.accountService.create(accountDto, request.user);
+    return AccountResponseDto.fromEntity(result);
   }
 
   @Get(ID_PARAMETER)
   @ApiParam({ name: ID_PARAMETER_NAME, type: String })
-  @ApiOkResponse({ type: AccountEntity })
+  @ApiOkResponse({ type: BalanceResponseDto })
   public async getById(
     @Param(ID_PARAMETER_NAME) id: UUID,
     @Req() request: RequestWithUser,
-  ): Promise<Account> {
-    return await this.accountService.getById(id, request.user);
+  ) {
+    const result = await this.accountService.getById(id, request.user);
+    return BalanceResponseDto.fromEntity(result);
   }
 
   @Get()
-  @ApiOkResponse({ isArray: true, type: AccountEntity })
-  public async getManyByClient(
-    @Req() request: RequestWithUser,
-  ): Promise<Account[]> {
-    return await this.accountService.getManyByClient(request.user);
+  @ApiOkResponse({ isArray: true, type: AccountResponseDto })
+  public async getManyByClient(@Req() request: RequestWithUser) {
+    const result = await this.accountService.getManyByClient(request.user);
+    return result.map((entity) => AccountResponseDto.fromEntity(entity));
   }
 
   @Patch(ID_PARAMETER)
   @HttpCode(HttpStatus.OK)
   @ApiParam({ name: ID_PARAMETER_NAME, type: String })
-  @ApiOkResponse({ type: AccountEntity })
+  @ApiOkResponse({ type: AccountResponseDto })
   @ApiNotFoundResponse({ description: 'Not found' })
   public async updateStatus(
     @Body() changeStatusDto: ChangeAccountStatusDto,
     @Param(ID_PARAMETER_NAME) id: UUID,
     @Req() request: RequestWithUser,
-  ): Promise<Account> {
-    return await this.accountService.changeStatus(
+  ) {
+    const result = await this.accountService.changeStatus(
       id,
       changeStatusDto,
       request.user,
     );
+    return AccountResponseDto.fromEntity(result);
   }
 }
