@@ -27,7 +27,6 @@ import {
   UUID,
 } from '../../common';
 import { CreateTransactionDto, TransactionResponseDto } from './dto';
-import { TransactionEntity } from './entities';
 import { TransactionService } from './transaction.service';
 
 @ApiTags(TRANSACTIONS_TAG)

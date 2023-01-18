@@ -1,15 +1,15 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ClientEntity } from 'src/clients';
 import { Repository } from 'typeorm';
 
-import { Account, BaseAbstractRepository, UUID } from '../../../common';
+import { BaseAbstractRepository, UUID } from '../../../common';
 import { AccountEntity, DAILY_WITHDRAWAL_LIMIT_PROPERTY } from '../../entities';
 import { TRANSACTION_DATE_PROPERTY, TransactionEntity } from '..';
 import {
   SearchOptions,
   TransactionRepositoryInterface,
 } from './transactionRepository.interface';
-import { ClientEntity } from 'src/clients';
 
 @Injectable()
 export class TransactionRepository

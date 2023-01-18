@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose, instanceToPlain } from 'class-transformer';
-import { IsDate, IsNumber, IsPositive, IsUUID } from 'class-validator';
+import { IsDate, IsNumber, IsUUID } from 'class-validator';
 
 import { Transaction, UUID } from '../../../common';
 import { TRANSACTION_DATE_PROPERTY } from '../entities';

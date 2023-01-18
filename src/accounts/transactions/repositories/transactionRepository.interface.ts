@@ -1,4 +1,4 @@
-import { BaseInterfaceRepository, Client, UUID } from '../../../common';
+import { BaseInterfaceRepository, UUID } from '../../../common';
 import { TransactionEntity } from '..';
 
 export const TransactionRepositoryInterfaceToken = Symbol(
