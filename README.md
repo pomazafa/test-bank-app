@@ -1,15 +1,4 @@
-## Технологии
-
-- Postgres
-- Node.js
-- NestJS
-- Swagger
-- Git
-- NPM
-- TypeScript
-- Redis
-
-## Описание проекта
+## Краткое описание проекта
 
 Необходимо реализовать модули для системы управления пользователями.
 Реализовать REST API для операций по осуществлению банковский транзацкий.
@@ -25,6 +14,17 @@
 7. Ограничение по количеству запросов на получение текущего счета в день(без дополнительных таблиц)
 8. Проверка, откуда приходят запросы и запрет, если запрос из неизвестного источника
 
+## Технологии
+
+- Postgres
+- Node.js
+- NestJS
+- Swagger
+- Git
+- NPM
+- TypeScript
+- Redis
+
 ## Системные требования
 
 ### Node.js
@@ -32,17 +32,29 @@
 - Linux: https://nodejs.org/en/download/package-manager/
 - Windows: https://nodejs.org/en/download/
 
+Минимальная версия v18.7.0
+
+### Npm
+
+Минимальная версия 8.18.0
+
 ### Docker
 
 https://docs.docker.com/engine/install/
+
+Минимальная версия 20.10.22
 
 ### Docker Compose
 
 https://docs.docker.com/compose/install/
 
+Минимальная версия 1.29.2
+
 ### Git
 
 https://github.com/git-guides/install-git
+
+Минимальная версия 2.37.2
 
 ## Установка
 
