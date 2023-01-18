@@ -21,7 +21,6 @@ import {
 
 import { JwtGuard } from '../auth';
 import {
-  Account,
   ACCOUNTS_PREFIX,
   ACCOUNTS_TAG,
   ID_PARAMETER,
@@ -36,7 +35,6 @@ import {
   ChangeAccountStatusDto,
   CreateAccountDto,
 } from './dto';
-import { AccountEntity } from './entities';
 
 @ApiTags(ACCOUNTS_TAG)
 @ApiBearerAuth()

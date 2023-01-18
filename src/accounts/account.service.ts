@@ -1,6 +1,13 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  CACHE_MANAGER,
+  ForbiddenException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { Cache } from 'cache-manager';
 
-import { Client, UUID } from '../common';
+import { Client, DAILY_ACCOUNT_READING_LIMIT, UUID } from '../common';
 import { ChangeAccountStatusDto, CreateAccountDto } from './dto';
 import { AccountEntity } from './entities';
 import {
@@ -13,6 +20,7 @@ export class AccountService {
   constructor(
     @Inject(AccountRepositoryInterfaceToken)
     private readonly accountRepository: AccountRepositoryInterface,
+    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
   ) {}
 
   public async create(
@@ -40,6 +48,14 @@ export class AccountService {
   }
 
   public async getById(id: UUID, client: Client): Promise<AccountEntity> {
+    const accountBalanceReadingCount = await this.cacheManager.get<number>(id);
+    if (
+      accountBalanceReadingCount &&
+      accountBalanceReadingCount >= DAILY_ACCOUNT_READING_LIMIT
+    ) {
+      throw new ForbiddenException('Daily account reading limit reached');
+    }
+
     const account = await this.accountRepository.findOneByOptions({
       id,
       clientId: client.id,
@@ -47,6 +63,15 @@ export class AccountService {
     if (!account) {
       throw new NotFoundException(`Account with id ${id} not found`);
     }
+
+    const end = new Date();
+    end.setUTCHours(23, 59, 59, 999);
+
+    await this.cacheManager.set(
+      id,
+      accountBalanceReadingCount ? accountBalanceReadingCount + 1 : 1,
+      end.getTime(),
+    );
     return account;
   }
 
