@@ -106,7 +106,7 @@ export class TransactionRepository
     }
   }
 
-  private async checkAccountStatus(account: AccountEntity) {
+  private checkAccountStatus(account: AccountEntity) {
     if (!account.active) {
       throw new ForbiddenException('Account is inactive');
     }
